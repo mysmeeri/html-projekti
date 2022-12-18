@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+<head><style>
+    div {
+        background-color: pink;
+        padding: 3%;
+        margin: 3%;
+        font-family: Arial, Helvetica, sans-serif;
+        border-radius: 25px;
+        text-align: center;
+    
+    
+    }
+    
+    input {
+        width: fit-content;
+    }
+    
+    h1 {
+        text-align: center;
+    }
+    
+    h3 {
+        text-align: center;
+    }
+    
+    button {
+        margin: 3px;
+    }
+    
+    #sisalto {
+        background-color: white;
+    
+    }
+    
+    #monivalinnat {
+        text-align: left;
+    
+    }
+    
+    #ohjeetDiv {
+        visibility: hidden;
+    }</style>
+</head>
+
+<body>
+
+    <title>salasanageneraattori</title>
+    <div id="container">
+        <h1>Salasanageneraattori</h1>
+        <h6 style="text-align:center">Tällä sovelluksella voit luoda itsellesi vahvan salasanan.</h6>
+        <div id="sisalto">
+
+            <p>Generoitu salasana:</p>
+            <p id="tulos"></p>
+        </div>
+        <h3>Valinnat</h3>
+        <div id="sisalto">
+            <p>Valitse salasanan pituus:</p>
+            <select id="selectPituus">
+                <option>10</option>
+                <option>12</option>
+                <option>14</option>
+                <option>16</option>
+                <option>18</option>
+            </select><br><br>
+            <div id="monivalinnat">
+                <p style="text-align:center">Salasana saa sisältää:</p>
+
+                <input id="cb1" type="checkbox" style="text-align:left">Erikoismerkit</input><br>
+                <input id="cb2" type="checkbox">Isot kirjaimet</input><br>
+                <input id="cb3" type="checkbox">Numerot</input><br>
+            </div>
+
+        </div>
+        <h3>Napit</h3>
+        <div id="sisalto">
+            <button id="gen" onclick="generoiSalasana()">Generoi</button>
+            <button id="tyhja" onclick="tyhjennaKaikki()">Tyhjennä</button>
+            <button id="ohje" onclick="avaaOhje()">Ohjeet</button>
+            <p id="testi"></p>
+            
+            
+        </div>
+
+
+    </div>
+    <div id="ohjeetDiv">
+        <p>Tällä ohjelmalla voit generoida itsellesi vahvan salasanan.
+            Valitse salasanalle haluamasi pituus. Salasana sisältää automaattisesti
+            10 pientä kirjainta ilman valintaa.
+        </p>
+        <button id="suljeOhjeet" onclick="sulje()">OK</button>
+    </div>
+
+    <script>
+        var div = document.getElementById('ohjeetDiv');
+        function tyhjennaKaikki() {
+            var getValue = document.getElementById("tulos");
+            if (getValue.value != "") {
+                getValue.value = "";
+            }
+            document.getElementById("cb1").checked = false;
+            document.getElementById("cb2").checked = false;
+            document.getElementById("cb3").checked = false;
+        }
+
+        function generoiSalasana() {
+            var getValue = document.getElementById('selectPituus').selectedOptions[0].value;
+            document.getElementById("tulos").innerHTML = "toimii";
+            var length = getValue;
+            let erikoismerkit = document.getElementById("cb1").checked;
+            let isotKirjaimet = document.getElementById("cb2").checked;
+            let numerot = document.getElementById("cb3").checked;
+            var result = '';
+            var characters = 'abcdefghijklmnopqrstuvwxyz';
+            if (erikoismerkit === true){
+                let char = '!"#¤%&/()=?';
+                characters += char;
+            }
+            if (isotKirjaimet === true){
+                let char = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                characters += char;
+            }
+            if (numerot === true){
+                let char = '0123456789'
+                characters += char;
+            }
+            var charactersLength = characters.length;
+            for (var i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            document.getElementById("tulos").innerHTML = result;
+            
+            
+        }
+
+        
+
+        /** funktio joka avaa nappia painamalla ohjeet käyttäjälle, samaa nappia painamalla ohjeet myös sulkeutuu */
+        function avaaOhje() {
+            var display = div.style.visibility;
+            if (display == 'visible') {
+                div.style.visibility = "hidden";
+            } else {
+                div.style.visibility = "visible";
+            }
+
+        }
+
+        /** funktio napille joka sulkee ohjeikkunan pois näkyvistä */
+        function sulje() {
+            div.style.visibility = "hidden";
+        }
+
+
+
+    </script>
+
+
+</body>
+
+</html>
